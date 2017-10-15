@@ -1,13 +1,13 @@
+import java.util.List;
 import java.util.Scanner;
 
 class Solver {
 
-
     private String[][] sudoku = new String[9][9];
+    private String[][][] possible_numbers = new String[9][9][9];
 
     Solver() {
     }
-
 
     String[][] generate_grid() {
         for (int y = 0; y < 9; y++) {
@@ -65,9 +65,41 @@ class Solver {
             }
         }
 
-
         return this.sudoku;
     }
 
+    String[][][] find_possible_numbers(String[][] grid) {
+        String[] tmp = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        List lst_tmp;
+
+        for (int y = 0; y < 9; y++) {
+            for (int x = 0; x < 9; x++) {
+                if (grid[y][x].equals(" ")) {
+                    lst_tmp = List.of(grid[y]);
+                    this.possible_numbers[y][x] = tmp.clone();
+
+                    for (int i = 0; i < 9; i++) {
+                        if (lst_tmp.contains(this.possible_numbers[y][x][i])) {
+                            this.possible_numbers[y][x][i] = " ";
+                        }
+                    }
+                }
+            }
+        }
+
+        return this.possible_numbers;
+    }
+
+    private void pnt(String[][][] test) {
+        for (int y = 0; y < 9; y++) {
+            for (int x = 0; x < 9; x++) {
+                for (int i = 0; i < 9; i++) {
+                    System.out.print(test[y][x][i] + " ");
+                }
+                System.out.print(" | ");
+            }
+            System.out.print(" \n ");
+        }
+    }
 
 }
