@@ -88,7 +88,7 @@ class Solver {
         return this.possible_numbers;
     }
 
-    String[][] solve(String[][] grid, String[][][] poss) {
+    String[][] rnd_solve(String[][] grid, String[][][] poss) {
         String[][] solved = deepcopy(grid);
         Random rnd = new Random();
         int z = -1;
