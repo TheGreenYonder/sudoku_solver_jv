@@ -1,5 +1,4 @@
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 class Solver {
 
@@ -86,8 +85,32 @@ class Solver {
                 }
             }
         }
-
         return this.possible_numbers;
+    }
+
+    String[][] solve(String[][] grid, String[][][] poss) {
+        String[][] solved = deepcopy(grid);
+        Random rnd = new Random();
+        int z = -1;
+        for (int y = 0; y < 9; y++) {
+            for (int x = 0; x < 9; x++) {
+                if (solved[y][x].equals(" ")) {
+                    while (solved[y][x].equals(" ")) {
+                        solved[y][x] = poss[y][x][rnd.nextInt(9)];
+                    }
+                }
+            }
+            //System.out.println(new HashSet<>(Arrays.asList(solved[y])).size());
+            if (new HashSet<>(Arrays.asList(solved[y])).size() != 9) {
+                solved = deepcopy(grid);
+                y = z;
+            } else {
+                grid = deepcopy(solved);
+                z++;
+            }
+        }
+
+        return solved;
     }
 
     private void pnt(String[][][] test) {
@@ -100,6 +123,15 @@ class Solver {
             }
             System.out.print(" \n ");
         }
+    }
+
+    private String[][] deepcopy(String[][] old) {
+        String[][] neu = new String[9][9];
+        for (int y = 0; y < 9; y++) {
+            System.arraycopy(old[y], 0, neu[y], 0, 9);
+        }
+
+        return neu;
     }
 
 }

@@ -7,5 +7,8 @@ class Starter {
         String[][] filled_sudoku = mysolver.fill_sudoku(empty_sudoku);
         mysolver.print_grid(filled_sudoku);
         String numbers[][][] = mysolver.find_possible_numbers(filled_sudoku);
+
+        String[][] solved = mysolver.solve(filled_sudoku, numbers);
+        mysolver.print_grid(solved);
     }
 }
