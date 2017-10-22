@@ -10,10 +10,9 @@ class Solver {
 
     String[][] generate_grid() {
         for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++) {
-                this.sudoku[y][x] = " ";
-            }
+            this.sudoku[y] = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
         }
+
         return this.sudoku;
     }
 
@@ -27,6 +26,7 @@ class Solver {
                 if (x % 3 == 0) {
                     line.append(" |");
                 }
+
                 line.append(" ").append(grid[y][x]);
             }
 
@@ -34,7 +34,7 @@ class Solver {
                 System.out.println(" -------------------------");
             }
 
-            System.out.println(line + " |");
+            System.out.println(line.append(" |"));
         }
 
         System.out.println(" -------------------------");
@@ -68,14 +68,13 @@ class Solver {
     }
 
     String[][][] find_possible_numbers(String[][] grid) {
-        String[] tmp = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
         List lst_tmp;
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 if (grid[y][x].equals(" ")) {
                     lst_tmp = List.of(grid[y]);
-                    this.possible_numbers[y][x] = tmp.clone();
+                    this.possible_numbers[y][x] = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
                     for (int i = 0; i < 9; i++) {
                         if (lst_tmp.contains(this.possible_numbers[y][x][i])) {
@@ -85,6 +84,7 @@ class Solver {
                 }
             }
         }
+
         return this.possible_numbers;
     }
 
@@ -92,6 +92,7 @@ class Solver {
         String[][] solved = deepcopy(grid);
         Random rnd = new Random();
         int z = -1;
+
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 if (solved[y][x].equals(" ")) {
@@ -100,7 +101,7 @@ class Solver {
                     }
                 }
             }
-            //System.out.println(new HashSet<>(Arrays.asList(solved[y])).size());
+
             if (new HashSet<>(Arrays.asList(solved[y])).size() != 9) {
                 solved = deepcopy(grid);
                 y = z;
@@ -113,25 +114,14 @@ class Solver {
         return solved;
     }
 
-    private void pnt(String[][][] test) {
-        for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++) {
-                for (int i = 0; i < 9; i++) {
-                    System.out.print(test[y][x][i] + " ");
-                }
-                System.out.print(" | ");
-            }
-            System.out.print(" \n ");
-        }
-    }
 
     private String[][] deepcopy(String[][] old) {
         String[][] neu = new String[9][9];
+
         for (int y = 0; y < 9; y++) {
             System.arraycopy(old[y], 0, neu[y], 0, 9);
         }
 
         return neu;
     }
-
 }
