@@ -119,7 +119,10 @@ class Solver {
         String[][] neu = new String[9][9];
 
         for (int y = 0; y < 9; y++) {
-            System.arraycopy(old[y], 0, neu[y], 0, 9);
+            // System.arraycopy(old[y], 0, neu[y], 0, 9); shallow?
+            for (int x = 0; x < 9; x++) {
+                neu[y][x] = old[y][x];
+            }
         }
 
         return neu;
